@@ -3,6 +3,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:oraxproperty/app/value_holders.dart';
 import 'package:oraxproperty/presentation/resources/fonts_manager.dart';
 
@@ -13,7 +14,7 @@ import 'package:oraxproperty/presentation/resources/string_manager.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 final FlutterLocalization localization = FlutterLocalization.instance;
@@ -65,23 +66,23 @@ class _MyAppState extends State<MyApp> {
   // });
 
   checkAppState() async {
-    InternetConnectionChecker().onStatusChange.listen((status) {
+    InternetConnection().onStatusChange.listen((status) {
       switch (status) {
-        case InternetConnectionStatus.connected:
+        case InternetStatus.connected:
           Fluttertoast.showToast(msg: 'Data connection is available.');
-          AwesomeDialog(context: context, width: displayWidth(context) * 0.85)
-              .show();
+          // AwesomeDialog(context: context, width: displayWidth(context) * 0.85)
+          //     .show();
           break;
-        case InternetConnectionStatus.disconnected:
+        case InternetStatus.disconnected:
           Fluttertoast.showToast(
               msg: AppStrings.noNetworkText.getString(context));
 
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return const AlertDialog();
-            },
-          );
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) {
+          //     return const AlertDialog();
+          //   },
+          // );
           break;
       }
     });
